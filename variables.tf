@@ -36,7 +36,7 @@ variable "lambda_role_name" {
 
 variable "chat_webhook" {
   type        = string
-  default     = "https://chat.googleapis.com/v1/spaces/AAAAO9-aZlw/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=-3kHt6IdjDwTi8SXDD1Zk4yB2oY4V6GyE3dLIwo7XAc"
+  default     = "https://chat.googleapis.com/v1/spaces/"
   description = "Webhook url where to send notifications"
 }
 

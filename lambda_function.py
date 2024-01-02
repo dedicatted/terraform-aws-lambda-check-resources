@@ -40,9 +40,11 @@ def lambda_handler(event, context):
     instance_ids = []
 
     for reservation in existing_instance_list['Reservations']:
-        for instance in reservation['Instances']:
-            instance_id = instance['InstanceId']
-            instance_ids.append(instance_id)
+        state = reservation['State']['Name']
+        if reservation['State']['Name']  == 'available':
+            for instance in reservation['Instances']:
+                instance_id = instance['InstanceId']
+                instance_ids.append(instance_id)
     
     # Check EBS volumes
     existing_volume_list = ec2.describe_volumes()
@@ -68,7 +70,8 @@ def lambda_handler(event, context):
 
     nat_gateways = ec2.describe_nat_gateways()['NatGateways']
     for nat_gateway in nat_gateways:
-        nat_gateway_ids.append(nat_gateway['NatGatewayId'])
+        if nat_gateway['State']  == 'available':
+            nat_gateway_ids.append(nat_gateway['NatGatewayId'])
 
     internet_gateways = ec2.describe_internet_gateways()['InternetGateways']
     for internet_gateway in internet_gateways:
